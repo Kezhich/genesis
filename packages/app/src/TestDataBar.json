@@ -1,0 +1,15 @@
+{
+    "datasets": [{
+        "data": [10, 20, 30, 15, 7, 18, 4]
+    }],
+
+    "labels": [
+        "Red",
+        "Yellow",
+        "Blue",
+        "White",
+        "Black",
+        "Green",
+        "Cyan"
+    ]
+}
