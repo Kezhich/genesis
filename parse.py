@@ -108,7 +108,6 @@ for i in rezul4:
 rezul5text = ""
 for i in rezul5:
     rezul5text += i
-rezul5text = rezul5text[14:-15]
 
 threats = {"label":"Родион, где названия?","date":rezul3text,"data":{"Группировки:":rezul5text,"CVE:":rezul4text}}
 print(json.dumps(threats))

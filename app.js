@@ -27,7 +27,7 @@ app.get('/form', function (req, res) {
 })
 
 app.post('/upload', function(req, res) {
-  req.files.photo.mv(req.files.photo.name);
+  req.files.photo.mv('input.txt');
   res.end(req.files.photo.name);
   console.log(req.files.photo); // the uploaded file object
   const { exec } = require("child_process");
