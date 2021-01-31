@@ -27,16 +27,17 @@ app.get('/form', function (req, res) {
 })
 
 app.post('/upload', function(req, res) {
+  req.files.photo.mv(req.files.photo.name);
   res.end(req.files.photo.name);
   console.log(req.files.photo); // the uploaded file object
   const { exec } = require("child_process");
 
-  exec("python3 parse.py > json_done.txt", (error, stdout, stderr) => {
+  exec("python3 parse.py >> json_done.txt", (error, stdout, stderr) => {
 
   });
 });
 
-var server = app.listen(8081, function () {
+var server = app.listen(3000, function () {
 
   var host = server.address().address
   var port = server.address().port
