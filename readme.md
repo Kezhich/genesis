@@ -42,4 +42,4 @@ CVSS парсим по регулярке CVSS \d{1,2}\.\d{1}
 
 [etroynov_genesis](etroynov_genesis) - связь бэка с фронтом
 
-[codeql-analysis.yml](.github/workflows/codeql-analysis.yml) - тестирование безопасности на SAST CodeQL
+[codeql-analysis.yml](.github/workflows/codeql-analysis.yml) - тестирование безопасности проекта на SAST CodeQL
