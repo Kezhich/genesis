@@ -37,367 +37,510 @@
 
 
 
-8/28/2019 奇安信威胁情报中⼼
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 1/9
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 1/13
 
-奇安信威胁情报中⼼
+By Vicky Ray and Kaoru Hayashi <TIMESTAMP>February</TIMESTAMP> 1, 2019
 
-ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan
+Tracking OceanLotus’ new Downloader, KerrDown
+unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown
 
-返回 TI 主⻚
+OceanLotus (AKA <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT>) is a threat actor group known to be one of the most
+sophisticated threat actors originating out of south east <COUNTRY>Asia</COUNTRY>. Multiple attack
+campaigns have been reported by number of security organizations in the last couple of
+years, documenting the tools and tactics used by the threat actor. While OceanLotus’
+targets are global, their operations are mostly active within the APAC region which
+encompasses targeting private sectors across multiple industries, foreign governments,
+activists, and dissidents connected to <COUNTRY>Vietnam</COUNTRY>. 
 
-Overview
-Recently, an XLSM decoy document is captured by the RedDrip team of QiAnXin Threat Intelligence Center by utilizing public intelligence. After taking a
-deeper analysis, we figure out that the C2 configurations are located on Github and Feed43. Multiple Github spaces have been exposed through correlation
-analysis and the earliest one could trace back to <TIMESTAMP>July</TIMESTAMP> 2018. The relevant accounts were still in use when the report was completed.
+This blog will cover a new custom downloader <MITRE_ATTACK>malware</MITRE_ATTACK> family we’ve named
+“KerrDown” which OceanLotus have been actively using since <MITRE_ATTACK>at</MITRE_ATTACK> least early 2018. We
+also show how the jaccard-index algorithm was used to quickly find similarities between
+the new KerrDown <MITRE_ATTACK>malware</MITRE_ATTACK> family within our datasets. This method has proven to be very
+useful to extract similarities from large sample datasets and connecting attack
+campaigns together. Given the large number of “KerrDown” samples found, we were also
+able to discern possible patterns in OceanLotus’ working hours and days of a week which
+is discussed in the later sections of this blog. 
 
-Decryption algorithm for configurations retrieved from Github will be described in detail and the portrait of the attacker is partially based on statistics of the
-decrypted data.
+We identified two methods to deliver the KerrDown downloader to targets. One is using
+the Microsoft Office Document with a malicious macro and the other
+is RAR archive which contains a legitimate program with <MITRE_ATTACK>DLL side-loading</MITRE_ATTACK>. For RAR
+archive files, the file names used to trick targets are all in Vietnamese as shown in Figure
+11. Our analysis shows that the primary targets of the ongoing campaign discussed in this
+blog are either in <COUNTRY>Vietnam</COUNTRY> or Vietnamese speaking individuals.  
 
-Sample Analysis
-The related attack vector is an XLSM file, created on <TIMESTAMP>August</TIMESTAMP> 8 and uploaded to VT on <TIMESTAMP>August</TIMESTAMP> 13, that leverages <CVE>CVE-2017-11882</CVE> vulnerability to release
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe to the %AppData% directory and then add registry Run key to stay persistent. To obtain C2 address, it reads data from Github and Feed43 where
-the content could be controlled by attackers. HTTP/HTTPS protocols are used while communicating with available C2s.
+Malicious Document
 
-Dropper Analysis
-The sample was uploaded to VT <MITRE_ATTACK>at</MITRE_ATTACK> 5:05 on <TIMESTAMP>Aug</TIMESTAMP> 13, 2019 with below details:
+Our analysis began with an active mime document, something we’ve seen OceanLotus
+use before but this time involving a new payload, KerrDown. The lure hash is 
 
-MD5 0D38ADC0B048BAB3BD91861D42CD39DF
+(SHA256:89e19df797481ae2d2c895bcf030fe19e581976d2aef90c89bd6b3408579bfc3) 
 
-Name <COUNTRY>India</COUNTRY> makes Kashmir Dangerous Place in the World.xlsm
+Figure 1 below shows a snapshot of the lure file. Once the victim opens the lure
+document, which includes an image file with a message in Vietnamese which that asks the
+victim to enable macros to view the contents of the file. <MITRE_ATTACK>At</MITRE_ATTACK> first glance the document may
+look like there is no other content other than the notification to enable macros.
+However, a closer look reveals two different base64 blobs inserted in the page in separate
+tables and the font size has been changed to 1 which may deceive victims to overlook the
+content. Another reason for this technique may be that many automated tools are able to
+detect the presence of an embedded binary within the streams of such files and this
+technique may allow them to go undetected.  
 
-Time 2019-08-13 05:05:15
+Delivery Document Analysis
 
-After opening, a blurred picture shows up to lure the victim to enable macro. After that, a clear picture titled "<COUNTRY>India</COUNTRY> has made Kashmir the most dangerous place
-in the world" gets displayed.
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/
+http://blogs.360.<COUNTRY>cn</COUNTRY>/post/oceanlotus-apt.html
+https://www.welivesecurity.com/2018/11/20/oceanlotus-new-watering-hole-attack-southeast-asia/
+https://www.cybereason.com/blog/operation-cobalt-kitty-apt
+https://en.wikipedia.org/wiki/Jaccard_index
+https://attack.mitre.org/techniques/T1073/
 
-Figure 2.1 Images before and after enabling macro
-In fact, the clear picture is covered with a vague one. When macro is enabled, the above picture will be deleted so that the clear one will be displayed:
 
-Figure 2.2 Content of the macro
-There is an OLE object embedded inside, and it seems that the attacker packed the .bak file by mistake:
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 2/13
 
+  Figure 1: Lure document
 
-8/28/2019 奇安信威胁情报中⼼
+Once we increase the font size, the base64 blobs are visible in two different tables. Once
+decoded you can see the MZ header of the PE DLL <MITRE_ATTACK>at</MITRE_ATTACK> the beginning of each table, as
+shown in Figure 2.   
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 2/9
+Figure 2: Base64 encoded pedll files embedded as text in the document. 
 
-Figure 2.3 The ole objects packed inside
-Shellcode inside the OLE object performs below functions:
+Figure 3 shows a code excerpt from the embedded macro that checks which base64 blob
+should be decoded based on the iCheck variable, a Boolean value which is set to true if
+the victim system is running on a 64-bit system and false on a 32-bit system. If the system
 
-1.Correct the MZ header located <MITRE_ATTACK>at</MITRE_ATTACK> offset 0x558 of the shellcode entry point (add “MZ”)
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-1-Lure-document.png
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-2-Base64-encoded-pedll-files-embedded-as-text-in-the-document..png
 
-2.Drop the PE file to "%AppData%\<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe".
 
-3.Add registry run key (key value: lollipop) to make "%AppData%\<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe" persistent.
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-Figure 2.4 Shellcode to correct the header
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 3/13
 
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe Analysis
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe is released to the %AppData% directory, and the compilation time is <TIMESTAMP>August</TIMESTAMP> 8th, 2019 which coincides with the XML creation time on Github that
-will be described later on:
+is found to be 64-bit, the base64 encoded blob on the left is
+decoded otherwise the base64 encoded blob on the right is decoded. 
 
-Name <MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe
+Figure 3: Base64 blob selection based on system check 
 
-MD5 0f4f6913c3aa57b1fc5c807e0bc060fc
+We also noticed that the actors reused the VBS decode function published by Motobit.
+Figure 4 shows the comparison between the base64 function used in the macro code and
+the VBS base64 decoder function published by Motobit. 
 
-Compile Time 2019-08-08 14:00:32
+ 
 
-The main purpose of this sample is to obtain C2 configuration from the attacker's Github and feed43 space, and then performs decryption and connects to C2
-for further communications.
+Figure 4: Base64 decoder comparison 
 
-After the malicious code is executed, it will “sleep” for a period of time. This is implemented by executing function in a loop for 80,000 times, to delay <MITRE_ATTACK>execution</MITRE_ATTACK>
-in the sandbox:
+Similarity Analysis of KerrDown Samples using Jaccard-Index 
+Once we decoded and extracted both DLL files from the document we used a similarity
+analysis algorithm using the Jaccard index to check the binaries against known set of
+<MITRE_ATTACK>malware</MITRE_ATTACK> families used by OceanLotus  which yielded no matches with any
+previous OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK> families. However, we were able to find multiple other
+
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-3-Base64-blob-selection-based-on-system-check.png
+https://www.motobit.com/tips/detpg_Base64/
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-4-Base64-decoder-comparison.png
+https://en.wikipedia.org/wiki/Jaccard_index
 
 
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-8/28/2019 奇安信威胁情报中⼼
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 4/13
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 3/9
+samples in our datasets using the imphash value of the KerrDown samples and the
+accompanying C2 <MITRE_ATTACK>domains</MITRE_ATTACK>. Given the high number of samples found,
+we again used a similarity analysis algorithm using Jaccard Index to extract similarities
+between all the samples found. <MITRE_ATTACK>At</MITRE_ATTACK> this stage we were not sure if the DLL files were a
+backdoor or had any other functionality. Hence, we included a few
+other known OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK> family samples used no earlier than 2017 to our
+similarity test, and in most cases samples which were final payloads dropped in victim
+machines.  One of the main objectives was to quickly discern if KerrDown could have
+been variants of the known <MITRE_ATTACK>malware</MITRE_ATTACK> families we have been tracking or
+was OceanLotus employing a new <MITRE_ATTACK>malware</MITRE_ATTACK> family in their playbooks and in the recent
+campaigns. Plotting the Jaccard index results using networkx we can quickly visualize the
+similarities extracted. As you can see from Figure 5, there is a thick cluster of samples <MITRE_ATTACK>at</MITRE_ATTACK>
+the top right of the networkx graph which did not have any similarities with the other
+known OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK> family samples. Therefore, this observation was helpful for us
+to understand that the samples we were looking into were likely a new <MITRE_ATTACK>malware</MITRE_ATTACK> family
+being employed by the OceanLotus group <MITRE_ATTACK>at</MITRE_ATTACK> the time of analysis, which we have now
+named KerrDown.
 
-Figure 3.1 Executing function in a big loop to achieve sleep purpose
-It checks network connectivity by connecting to “https://en.wikipedia.org", then retrieves C2 configuration from two hard coded addresses (one works as a
-backup). The hard coded address is encrypted, each byte need to be subtracted by one to obtain the decrypted URL:
+ 
 
-Figure 3.2 Code to decrypt C2 configuration
+Figure 5: Similarity analysis using Jaccard Index 
 
-<MITRE_ATTACK>Source</MITRE_ATTACK> Decrypted Content
+KerrDown to <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> Beacon 
 
-feed43 URL https://node2.feed43.com/0056234178515131.xml
+https://en.wikipedia.org/wiki/Jaccard_index
+https://pypi.org/project/networkx/
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-5-Similarity-analysis-using-Jaccard-Index.png
 
-Github URL https://raw.githubusercontent.com/petersonmike/test/master/xml.xml
 
-The Github account used by the attacker is created on <TIMESTAMP>August</TIMESTAMP> 7th, 2019, which matches the compilation time of the sample:
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 5/13
 
+As discussed in the delivery document analysis above, depending on the OS architecture
+either of the embedded KerrDown DLLs will be dropped in the victim machine. The DLL is
+dropped in the directory location ‘Users\Administrator\AppData\Roaming\’ as
+‘main_background.png’. The DLL retrieves the payload from the URL, decrypts it by using
+DES algorithm and execute it in the memory. Therefore, it is observed that only
+the KerrDown DLL downloader is saved in the system and the payload directly gets
+executed in the memory without being written in the system. Table 1 shows the URL the
+downloader will attempt to download the payload from depending on the OS architecture
+of the victim machine. 
 
-8/28/2019 奇安信威胁情报中⼼
+OS Architec‐
+ture 
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 4/9
+URL  User Agent 
 
-Figure 3.3 The attacker's Github home page
-The C2 configuration is located inside the “description” field after encryption:
+32 bit  https://syn.servebbs[.]com/kuss32.gif  Mozilla/5.0 (Windows NT 10.0; Win32;
+x32; rv:60.0) 
 
-Figure 3.4 Github configuration file content
-The Base64 encoded data get decoded first, then performs ROL1((v11 + 16 * v9) ^ 0x23, 3) operation. After that, Base64 decode again and finally uses
-Blowfish (older version without Blowfish decryption) by decryption key below:
+64 bit  https://syn.servebbs[.]com/kuss64.gif  Mozilla/5.0 (Windows NT 10.0; Win64;
+x64; rv:60.0) 
 
-F0 E1 D2 C3 B4 A5 96 87 78 69 5A 4B 3C 2D 1E 0F 00 11 22 33 44 55 66 77
+Table 1 : Payload DLL selection based on architecture 
 
-The decrypted C2 address is 139.28.38.236 and the <MITRE_ATTACK>malware</MITRE_ATTACK> uses HTTP/HTTPS in network communication:
+The link to the final payload of KerrDown was still active during the time of analysis and
+hence we were able to download a copy which turned out to be a variant of
+<MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> Beacon. Cybereason also published previously on OceanLotus using
+<MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> in their campaigns and it is interesting to see the use of a new downloader
+<MITRE_ATTACK>malware</MITRE_ATTACK> family being used to still deliver the final payload of <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK>. As we can see
+in this case, the purpose of the <MITRE_ATTACK>malware</MITRE_ATTACK> is to download and execute the <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK>
+Beacon payload in memory. Though <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> is a commercial penetration testing
+<MITRE_ATTACK>tool</MITRE_ATTACK>, various threat actors are known to have used it in their campaigns.  
 
-Figure 3.5 C2 decryption algorithm
-System information of the compromised computer will be collected and then exfiltrated, AES encryption and Base64 encoding will be performed before
-sending out the collected data:
+RAR Archives with KerrDown 
+While investigating KerrDown we found multiple RAR files containing a variant of
+the <MITRE_ATTACK>malware</MITRE_ATTACK>. We haven’t yet identified the delivery method or targets of this variant. The
+attacker changed the downloader code by adding more stages and hiding each stage by
+compression and encryption. They also changed the way to execute the malicious code
+from an Office macro to the <MITRE_ATTACK>DLL side-loading</MITRE_ATTACK> technique through a legitimate program.  
 
-URI Content
+The RAR archive
+ 
 
-uuid ID generated by GetCurrentHwProfile
+(SHA256:040abac56542a2e0f384adf37c8f95b2b6e6ce3a0ff969e3c1d572e6b4053ff3)
+ 
 
-un System info
+has the Vietnamese file name ‘Don khieu nai.rar’ which translates to ‘Complaint letter’ in
+English. The archive contains a legitimate older version of Microsoft Word (Microsoft Word
+2007) executable file that is named ‘Noi dung
+chi tiet don khieu nai gui cong ty.exe’ which translates to ‘Learn more about how to use
+your company’ in English. The attacker used the <MITRE_ATTACK>DLL side loading</MITRE_ATTACK> technique to load a
+malicious DLL by the older version of Microsoft Word. When opening the executable file in
+the archive, it loads the malicious DLL in the same directory. The DLL executes multi-
+stage shellcodes and each shellcode employs various technique to hide the next
+stage. The overall installation steps are below: 
 
+https://www.cybereason.com/blog/operation-cobalt-kitty-apt
+https://unit42.paloaltonetworks.com/unit42-new-threat-actor-group-<MITRE_ATTACK>darkhydrus</MITRE_ATTACK>-targets-middle-east-government/
 
 
-8/28/2019 奇安信威胁情报中⼼
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 5/9
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 6/13
 
-<COUNTRY>cn</COUNTRY> Computer name
+1. The Microsoft Word exe loads wwlib.dll in the same directory and executes ‘FMain’
+function of the DLL.
 
-on OS version
+2. The DLL decodes base64 encoded shellcode in the body and executes it. 
+3. The shellcode decompresses the second shellcode which is compressed with the
 
-lan IP list
+open <MITRE_ATTACK>source</MITRE_ATTACK> compression code UCL and execute it. 
+4. The second shellcode decrypts the third shellcode with AES. 
+5. The third shellcode retrieves the shellcode from the following remote location and
 
-nop Blank
+executes it: https://cortanasyn[.]com/Avcv 
+6. The fourth shellcode loads the embedded <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> Beacon DLL in memory and
 
-ver <MITRE_ATTACK>Malware</MITRE_ATTACK> version, here it is 1.0
+executes it. 
 
-After that the <MITRE_ATTACK>malware</MITRE_ATTACK> enters a while loop, to perform actions according to HTTP response:
+Figure 6: <MITRE_ATTACK>Execution</MITRE_ATTACK> flow of sideloaded malicious downloader 
 
-URI Function
+Looking <MITRE_ATTACK>at</MITRE_ATTACK> the compile timestamps of all the KerrDown samples in our datasets we were
+able to discern a couple of observations: 
 
-/e3e7e71a0b28b5e96cc492e636722f73/4sVKAOvu3D/ABDYot0NxyG.php Online, message queue
+OceanLotus has been using the new downloader in their campaigns since <MITRE_ATTACK>at</MITRE_ATTACK> least
+<TIMESTAMP>March</TIMESTAMP> 2018 and continues to actively use it in their campaigns. Figure 7 shows the
+timeline of the KerrDown samples: 
 
-/e3e7e71a0b28b5e96cc492e636722f73/4sVKAOvu3D/UYEfgEpXAOE.php Upload data
+http://www.oberhumer.com/opensource/ucl/
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-6-<MITRE_ATTACK>Execution</MITRE_ATTACK>-flow-of-sideloaded-malicious-downloader.png
 
-Figure 3.6 Loop thread creation and message receiving
-The following table is a comparison table of the received tokens and the functions to be performed:
 
-Token Function
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-0 Exit
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 7/13
 
-8 Upload keylog file
+Figure 7: Downloader DLL compile time lines 
 
-23 Upload <MITRE_ATTACK>screen capture</MITRE_ATTACK> file
+While it is already widely believed that the OceanLotus group may originate from
+<COUNTRY>Vietnam</COUNTRY>, we wanted to find possible working hour patterns from the samples in our
+datasets. We plotted the compile times based on GMT +7 and found a clear pattern
+of the possible working hours of the group. The OceanLotus group has a typical 9
+AM to 6 PM working pattern with most samples compiled during this period of the
+day. Figure 8 shows the <MITRE_ATTACK>malware</MITRE_ATTACK> compilation timestamps in GMT +7 for each
+unique sample found in our dataset. 
 
-13 Upload collected list of files for a specific suffix
+Figure 8: <MITRE_ATTACK>Malware</MITRE_ATTACK> compilation times in GMT +7 
 
-5 Upload local file
+ We also observed all the samples were compiled during the weekdays – between
+Monday to Friday. Therefore, it is clear that the OceanLotus group works during
 
-33 Extract EXE download link from URL, then download and execute.
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-7-Downloader-DLL-compile-time-lines.png
+https://www.volexity.com/blog/2017/11/06/oceanlotus-blossoms-mass-digital-surveillance-and-exploitation-of-asean-nations-the-media-human-rights-and-civil-society/
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-8-<MITRE_ATTACK>Malware</MITRE_ATTACK>-compilation-times-in-GMT-7.png
 
-The attacker uploads the files generated after executing remote commands to the C&C <MITRE_ATTACK>server</MITRE_ATTACK>. The following table is a comparison table of the cached files
-and the contents of the records:
 
-File Name Content
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-9PT568.dat UUID
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 8/13
 
-TPX498.dat Keylog file
+weekdays and takes a break during the weekends. Figure 9 shows the samples
+compiled during the week. 
 
-TPX499.dat <MITRE_ATTACK>Screen capture</MITRE_ATTACK> file
+Figure 9: <MITRE_ATTACK>Malware</MITRE_ATTACK> compilation during weekdays 
 
-AdbFle.tmp Retrieved files specified by attacker
+Conclusion 
+OceanLotus has been an active threat actor group for a number of years and remains one
+of the most sophisticated threat actors in the APAC region. As we have seen with the
+new KerrDown downloader being used in their recent campaigns, the group continues to
+build and employ new tools and techniques in their overall operations and playbooks. It is
+therefore imperative to understand and keep a track of the group’s ongoing operations and
+capability to better defend against such threats. Given the high number of samples
+observed, we were also able to discern possible working hour patterns which shows us
+that the group likely has formal working hours and operating out of a region which is like
+<COUNTRY>Vietnam</COUNTRY> or nearby countries. While most of the targeting observed is towards Vietnamese
+speaking victims, given the known broader geographic and industry wide target base
+of OceanLotus, the group may use similar tools and playbooks against other targets.  
 
-edg499.dat Files with specific suffixes:
-(".txt",".doc",".xls",".xlsx",".docx",".xls",".ppt",".pptx",".pdf")
+ Palo Alto Networks customers are already protected via: 
 
-The <MITRE_ATTACK>malware</MITRE_ATTACK> collects a list of files with specific suffixes, stores them in a local file, and uploads to the C2 <MITRE_ATTACK>server</MITRE_ATTACK>:
+Indicators of Compromise: 
 
+Lure Docs: 
+ 73dcbcc47d6bd95dcf031ebbd34ac42301a20ee1143ac130b405e79b4ba40fc8 
 
+89e19df797481ae2d2c895bcf030fe19e581976d2aef90c89bd6b3408579bfc3 
 
-8/28/2019 奇安信威胁情报中⼼
+a4a066341b4172d2cb752de4b938bf678ceb627ecb72594730b78bd05a2fad9d 
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 6/9
+8bf22202e4fd4c005afde2266413cba9d1b749b1a2d75deac0c35728b5eb3af8 
 
-Figure 3.7 List of specified file extensions
+df8210d20c5eb80d44ba8fa4c41c26c8421dcb20168e4f796e4955e01ebc9e13 
 
-Data Analysis
-After performing correlation analysis, we discovered 44 configuration files hosted on Github and utilized by this APT group. All C2s have been decrypted and
-extracted for investigation. From the time of file creation, the attacker started working <MITRE_ATTACK>at</MITRE_ATTACK> least as early as <TIMESTAMP>July</TIMESTAMP> 2018. The earliest created account was on <TIMESTAMP>July</TIMESTAMP>
-3, 2018, and continued to <TIMESTAMP>August</TIMESTAMP> 2019 when the document was completed. In terms of the statistics of monthly creations, the number of creations in <TIMESTAMP>July</TIMESTAMP> 2018
-is much higher than the follow-up. We give the following reasonable speculations based on the data distribution.
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-9-<MITRE_ATTACK>Malware</MITRE_ATTACK>-compilation-during-weekdays.png
 
-The attacker may conduct a concentrated attack from <TIMESTAMP>July</TIMESTAMP> to <TIMESTAMP>September</TIMESTAMP> in 2018.
-Accounts are created on demand when the sample gets updated or related Github link is blocked.
 
-Figure 4.1 Configuration file distribution
-Some extracted Github user names are listed as follows. We found that the names are generated based on some family names. So the attacks may be
-completed by multiple attackers considering the different names being used. Many IDs can be found on <MITRE_ATTACK>social media</MITRE_ATTACK>, and most of them are located in
-<COUNTRY>India</COUNTRY> and <COUNTRY>Pakistan</COUNTRY>:
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-malikzafar786,Zunaid-
-zunaid1,a1amir1,Alaeck,aleks0rg0v,alexboycott,alfreednobeli,chrisyoks,dawoood,ehsaankhan,fakheragainfkhr,fangflee,habrew,hazkabeeb,husngilgit,imranikhan17,imrankh
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 9/13
 
-Keywords such as “android” and “mobile” are used in the Github directory, perhaps it indicates there are samples for Android phones.
+94fab926b73a6a5bc71d655c8d611b40e80464da9f1134bfce7b930e23e273ab 
 
-testy,test,amnigomestro,android,blch,cartoon,fashion,harrypotter,haz,helbrat,huric,husnahazrt,introduction,Joncorbat,kjhlkjhjkl,likingd,mdfs,metest,mobileapp,mobilegame,m
+4321a9f95901a77b4acfbaef3596cf681712345e1cbd764873c6643fe9da7331 
 
-Most of the C2s are located in <COUNTRY>Ukraine</COUNTRY> while there are 2 IPs in <COUNTRY>China</COUNTRY>:
+KerrDown DLLs: 
 
+ 4a0309d8043e8acd7cb5c7cfca95223afe9c15a1c34578643b49ded4b786506b 
 
+4b431af677041dae3c988fcc901ac8ec6e74c6e1467787bf099c4abd658be5be 
 
-8/28/2019 奇安信威胁情报中⼼
+4bc00f7d638e042da764e8648c03c0db46700599dd4f08d117e3e9e8b538519b 
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 7/9
+4e2f8f104e6cd07508c5b7d49737a1db5eeba910adfdb4c19442a7699dc78cfc 
 
-Figure 4.2 C2 distribution
-Statistics of XML creation time is provided in the below (the horizontal axis is the time of UTC+0, and the vertical axis is the number of occurrences).
+4e791f2511c9bd3c63c8e37aa6625d8b590054de9e1cca13a7be2630bc2af9ce 
 
-Figure 4.3 Attacker's 24-hour activity distribution
+539e8a53db3f858914cfe0d2132f11de34a691391ba71673a8b1e61367a963c7 
 
-Conclusion
-The link to feeds.rapidfeeds.com left in its XML configuration file was also mentioned by Kaspersky’s report in the reference section, which confirms that the
-APT-C-09 group keeps updating its C2 configuration channel and the recent one reserves some past features.
+53cd92f37ffd0822cc644717363ba239d75c6d9af0fa305339eaf34077edd22d 
 
-In the perspective of cyber wars, the conflict between <COUNTRY>India</COUNTRY> and <COUNTRY>Pakistan</COUNTRY> over the territory of Kashmir has lasted for decades, which makes it a perfect topic in
-target attacks. For example, Donot and Bitter disguised as Kashmiri Voice to attack <COUNTRY>Pakistan</COUNTRY>, Transparent Tribe attacked <COUNTRY>India</COUNTRY> with decoy document regarding
-terrorist attacks in Kashmir. These combats have proved that national power plays an important role in defending the national sovereignty and in the mean
-while spying on the military intelligence.
+53efaac9244c24fab58216a907783748d48cb32dbdc2f1f6fb672bd49f12be4c 
 
-<COUNTRY>India</COUNTRY>’s attempt to abolish <COUNTRY>India</COUNTRY>-controlled Kashmir is to detonate the conflict between the two countries. The two sides exchanged fire and some soldiers have
-died because of this. In terms of cyber attacks, related incidences will continue to rise up. Considering APT-C-09, Bitter and Donot have carried out targeted
-attacks against <COUNTRY>China</COUNTRY>, we must take actions in advance and keep a close eye on their recent activities.
+5c18c3e6f7ac0d0ac2b5fa9a6435ee90d6bd77995f85bed9e948097891d42ca2 
 
-QiAnXin Threat Intelligence Center will provide customers with the latest attack trends in the first time, helping government and enterprises to resist network
-intrusions from foreign enemies.
+5cda7d8294a8804d09108359dd2d96cdf4fdcf22ec9c00f0182d005afff76743 
 
-IOCs
-C2:
+5f0db8216314da1f128b883b918e5ac722202a2ae0c4d0bf1c5da5914a66778e 
 
-139.28.38.236
+6010d44cdca58cdec4559040e08798e7b28b9434bda940da0a670c93c84e33cd 
 
-AES Key:
+60b65ebb921dca4762aef427181775d10bbffc30617d777102762ab7913a5aa1 
 
-DD1876848203D9E10ABCEEC07282FF37
+6146aedfe47597606fb4b05458ec4b99d4e1042da7dc974fa33a57e282cd7349 
 
+6245b74b1cc830ed95cb630192c704da66600b90a331d9e6db70210acb6c7dfa 
 
+67cd191eb2322bf8b0f04a63a9e7cb7bc52fb4a4444fcb8fed2963884aede3aa 
 
-8/28/2019 奇安信威胁情报中⼼
+68f77119eae5e9d2404376f2d87e71e4ab554c026e362c57313e5881005ae79e 
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 8/9
+69e679daaaff3832c39671bf2b813b5530a70fb763d381f9a6e22e3bc493c8a9 
 
-BlowFish Key:
+6faa7deb1e1e0c3a7c62c2bb0ecdfa56b6e3ba4fe16971ec4572267ac70b9177 
 
-F0E1D2C3B4A5968778695A4B3C2D1E0F0011223344556677
+6fb397e90f72783adec279434fe805c732ddb7d1d6aa72f19e91a1bf585e1ea5 
 
-Host Name:
+70db041fb5aadb63c1b8ae57ba2699baa0086e9b011219dcebcccbf632017992 
 
-WIN-ABPA7FG820B
+7673f5468ba3cf01500f6bb6a19ce7208c8b6fc24f1a3a388eca491bc25cd9cd 
 
-Appendix: Extracted C2 Information
+77805a46f73e118ae2428f8c22ba28f79f7c60aeb6305d41c0bf3ebb9ce70f94 
 
-C2 Time Github username
+788265447391189ffc1956ebfec990dc051b56f506402d43cd1d4de96709c082 
 
-http://149.56.80.64/u5b62ed973d963913bb/u5a3ewfasdk9.php 2018-07-03T05:19:43 y4seenkhan
+7be613237b57fbc3cb83d001efadeed9936a2f519c514ab80de8285bdc5a666c 
 
-http://149.56.80.64/u5b62ed973d963913bb/u5a3ewfasdk9.php 2018-07-03T05:29:54 hazkabeeb
+7dbb7fab4782f5e3b0c416c05114f2a51f12643805d5f3d0cd80d32272f2731a 
 
-http://43.249.37.165/kungfu/ghsnls.php 2018-07-04T12:45:13 Zunaid-zunaid1
 
-http://123.57.158.115/shujing/ghsnls.php 2018-07-04T14:39:00 Zunaid-zunaid1
 
-185.82.217.200/@lb3rt/dqvabs.php 2018-07-04T20:46:50 Zunaid-zunaid1
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-185.82.217.200/N3wt0n/dqvabs.php 2018-07-04T22:01:40 aleks0rg0v
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 10/13
 
-http://185.82.217.200/d3m0n/dqvabs.php 2018-07-05T10:43:25 Vldir
+7ec77e643d8d7cc18cc67c123feceed91d10db1cc9fa0c49164cba35bb1da987 
 
-http://81.17.30.28/th0mas/dqvabs.php 2018-07-05T20:30:57 Alaeck
+860f165c2240f2a83eb30c412755e5a025e25961ce4633683f5bc22f6a24ddb6 
 
-http://46.183.216.222/0racl3/dqvabs.php 2018-07-07T12:10:04 yamichaeldavid
+868ed69533fac80354a101410d3dd0a66f444385c6611cc85c5b0be49db2d6fd 
 
-http://91.229.79.183/b15d0e30a7738037/j8fiandfuesmg.php 2018-07-10T16:26:55 habrew
+89759e56d5c23085e47d2be2ce4ad4484dfdd4204044a78671ed434cec19b693 
 
-http://176.107.182.24/f0357a3f154bc2ff/sadk9f043ejf.php 2018-07-10T16:35:49 ehsaankhan
+8b7fb1cd5c09f7ec57ccc0c4261c0b4df0604962556a1d401b9cbfd750df60ba 
 
-http://146.185.234.71/Ms3f3g45thgy5/f3af3fasf32.php 2018-07-11T00:03:07 dawoood
+8d6e31c95d649c08cdc2f82085298173d03c03afe02f0dacb66dd3560149184f 
 
-http://185.203.116.58/d394d142687ff5a0/dfae43rsfdgq4e.php 2018-07-11T01:24:49 fangflee
+942d763604d0aefdff10ce095f806195f351124a8433c96f5590d89d809a562f 
 
-185.156.173.73 2018-07-11T02:47:04 noorhasima
+98a5f30699564e6d9f74e737a611246262907b9e91b90348f7de53eb4cf32665 
 
-http://188.165.124.30/c6afebaa8acd80e7/byuehf8af.php 2018-07-11T03:15:07 alfreednobeli
+9e6011d6380207e2bf5105cde3d48e412db565b92cdc1b3c6aa15bd7bd4b099f 
 
-http://146.185.234.71/Ms3f3g45thgy5/f3af3fasf32.php 2018-07-11T09:27:55 jahilzubaine
+a106e0a6b7cc30b161e5ea0b1ec0f28ab89c2e1eb7ba2d5d409ddbabc3b037e6 
 
-94.156.35.204 2018-07-11T11:23:16 husngilgit
+a2b905c26e2b92e63de85d83e280249258cb21f300d8c4a3a6bdb488676e9bcf 
 
-http://94.156.35.204/22af645d1859cb5c/sg4gasdnjf984.php 2018-07-11T16:26:29 raqsebalooch
+a4a86e96f95f395fcf0ceb6a74a2564f4ba7adbe1b40cc702b054427327a0399 
 
-185.203.118.115 2018-07-12T10:19:05 lctst
+a8192656dd1db0be4cec9d03b4d10e0529d9c52c899eda8d8e72698acfb61419 
 
-185.29.11.59 2018-07-13T18:28:04 rehmanlaskkr
+a8f776bd3a9593e963b567ce790033fec2804ea0afb40a92d40e21d8f33d066f 
 
-?桔% ?旵`辚3 2018-07-13T19:33:56 noorfirdousi
+b4966f8febdba6b2d674afffc65b1df11e7565acbd4517f1e5b9b36a8c6a16ed 
 
-185.206.144.67 2018-07-14T12:04:38 rizvirehman
+bb25f1a73d095d57b2c8c9ac6780e4d412ddf3d9eef84a54903cc8e4eaefc335 
 
-185.36.188.14 2018-08-20T10:58:18 fakheragainfkhr
+bc82bce004afb6424e9d9f9fc04a84f58edf859c4029eda08f7309dbeec67696 
 
-199.168.138.119 2018-08-24T12:46:00 malikzafar786
+c30198e0b0e470d4ac8821bd14bb754466e7974f1c20be8b300961e9e89ed1ea 
 
-199.168.138.119 2018-08-24T12:55:02 malikzafar786
+caabc45e59820a4349db13f337063eddede8a0847ae313d89a800f241d8556c8 
 
-199.168.138.119 2018-08-24T12:57:59 malikzafar786
+d3ef6643ad529d43a7ec313b52c8396dc52c4daad688360eb207ee91a1caf7b2 
 
-85.217.171.138 2018-09-01T09:47:20 malikzafar786
+e3c818052237bb4bb061290ab5e2a55c3852c8a3fef16436b1197e8b17de2e18 
 
-85.217.171.138 2018-09-01T09:53:03 malikzafar786
+e56ffcf5df2afd6b151c24ddfe7cd450f9208f59b5731991b926af0dce24285a 
 
-http://46.183.216.222/0racl3/dqvabs.php 2018-09-01T10:35:34 malikzafar786
+e8704bf6525c90e0f5664f400c3bf8ff5da565080a52126e0e6a62869157dfe3 
 
-199.168.138.119 2018-09-18T10:34:23 malikzafar786
+e8a454cd8b57a243f0abeec6945c9b10616cfdcc4abfb4c618bfc469d026d537 
 
-199.168.138.119 2018-09-18T10:37:49 malikzafar786
+eac776c3c83c9db1a770ffaf6df9e94611c8293cbd41cb9257148603b8f2be0b 
 
-193.37.213.101 2018-11-05T11:53:40 a1amir1
+ead0f3e6f0ca16b283f09526d09e8e8cba687dab642f0e102e5487cb565bf475 
 
-178.33.94.35 2018-12-05T12:11:46 malikzafar786
+f011a136996fa53fdbde944da0908da446b9532307a35c44ed08241b5e602cc9 
 
-178.33.94.35 2018-12-05T12:38:34 malikzafar786
+f2a2f4fa2ed5b2a94720a4661937da97ab21aa198a5f8c83bb6895aa2c398d22 
 
-;3癬??^a;?筛 2018-12-17T06:50:14 yusufk1
+f62f21ee7e642f272b881827b45ceb643c999a742e1d3eac13d1ba014d1e7f67 
 
-185.29.11.59 2019-01-15T08:03:17 str1ngstr
 
-164.132.75.22 2019-03-01T05:28:04 z00min
 
-193.22.98.17 2019-05-27T05:47:11 alexboycott
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
 
-91.92.136.239 2019-06-24T11:14:16 imrankhan713
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 11/13
 
-91.92.136.239 2019-06-24T12:05:21 imranikhan17
+f9f0973dc74716b75291f5a9b2d59b08500882563011d1def2b8d0b1b9bbb8ae 
 
-185.116.210.8 2019-07-18T10:35:43 chrisyoks
+C2: 
+ theme[[.]]blogsite[.]org 
 
+cortana[.]homelinux[.]com 
 
+word[.]webhop[.]info 
 
-8/28/2019 奇安信威胁情报中⼼
+work[.]windownoffice[.]com 
 
-https://ti.qianxin.com/blog/articles/apt-c-09-reappeared-as-conflict-intensified-between-india-and-pakistan/ 9/9
+cortanasyn[.]com 
 
-185.161.210.8 2019-07-18T12:10:48 johnhenery12
+e[.]browsersyn[.]com 
 
-139.28.38.231 2019-08-07T10:58:56 petersonmike
+syn[.]servebbs[.]com 
 
-139.28.38.236 2019-08-08T09:06:03 shaikmalik22
+service[.]windown-update[.]com 
 
-Reference
-1. https://securelist.com/the-dropping-elephant-actor/75328/
+check[.]homeip[.]<MITRE_ATTACK>net</MITRE_ATTACK> 
 
+outlook[.]updateoffices[.]<MITRE_ATTACK>net</MITRE_ATTACK> 
+
+mail[.]fptservice[.]<MITRE_ATTACK>net</MITRE_ATTACK> 
+
+office[.]windown-update[.]com 
+
+cortanazone[.]com 
+
+beta[.]officopedia[.]com 
+
+videos[.]dyndns[.]org 
+
+service[.]serveftp[.]org 
+
+syn[.]browserstime[.]com 
+
+check[.]webhop[.]org 
+
+ristineho[.]com 
+
+ Appendix A: 
+<MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> Beacon contains the hard-coded configuration data in its body. JPCERT
+published an article about the structure of the configuration. The sample we obtained has
+the following configuration (Figure 10) and connects to the C2 <MITRE_ATTACK>server</MITRE_ATTACK>,
+https:// b.cortanazone[.]com. 
+
+
+
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
+
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 12/13
+
+Figure 10: <MITRE_ATTACK>Cobalt Strike</MITRE_ATTACK> Beacon configuration 
+
+Appendix B: 
+Figure 11 shows some of the contents of the individual RAR files. All the .exe files are
+copies of Windows Word and the associated ‘wwlib.dll’ file is the malicious downloader
+DLL KerrDown, which is sideloaded when the .exe file gets executed. 
+
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-10-<MITRE_ATTACK>Cobalt-Strike</MITRE_ATTACK>-Beacon-configuration.png
+
+
+3/15/2019 Tracking OceanLotus’ new Downloader, KerrDown
+
+https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/ 13/13
+
+Figure 11: RAR archives with malicious DLL for sideloading
+
+ 
+ 
+
+https://unit42.paloaltonetworks.com/wp-content/uploads/2019/01/Figure-11-RAR-archives-with-malicious-DLL-for-sideloading.png
 
