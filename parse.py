@@ -53,6 +53,8 @@ def main():
         
 if __name__ == '__main__':
     main()
+    
+    # in about here we started fast programming
     os.system("cat output.txt | grep \"</\" > output2.txt")
     
     with open('output2.txt') as f:
