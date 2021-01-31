@@ -1,5 +1,7 @@
 # Проект команды SecurityBand
 
+<img src="packages/logo.png"/>
+
 ## Инструкция по запуску:
 
 git clone https://github.com/Kezhich/genesis; cd genesis
