@@ -91,23 +91,23 @@ if __name__ == '__main__':
 
 rezultext = ""
 for i in rezul:
-    rezultext += i
+    rezultext += i+";"
 
 rezul2text = ""
 for i in rezul2:
-    rezul2text += i
+    rezul2text += i+";"
 
 rezul3text = ""
 for i in rezul3:
-    rezul3text += i
+    rezul3text += i+";"
 
 rezul4text = ""
 for i in rezul4:
-    rezul4text += i
+    rezul4text += i+";"
 
 rezul5text = ""
 for i in rezul5:
-    rezul5text += i
+    rezul5text += i+";"
 
-threats = {"label":"Родион, где названия?","date":rezul3text,"data":{"Группировки:":rezul5text,"CVE:":rezul4text}}
-print(json.dumps(threats))
+threats = {"date":rezul3text,"data":{"APT groups:":rezul5text,"CVE:":rezul4text,"Country:":rezul2text,"MITRE ATTACK:":rezultext}}
+print(json.dumps(threats),"<br>")

@@ -1,121 +1,42 @@
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 1/18
-Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from
-threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-
-The OceanLotus Group (aka <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT>, CobaltKitty | previous reports: The SpyRATs of
-OceanLotus; OceanLotus APT Group Leveraging <MITRE_ATTACK>Steganography</MITRE_ATTACK>) is using a suite of
-development since 2016, combine capabilities like packet sniffing, gateway/device <MITRE_ATTACK>ARP</MITRE_ATTACK>
-poisoning, <MITRE_ATTACK>DNS</MITRE_ATTACK> poisoning, HTTP injection, and MAC spoofing. 
-  Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html
-https://threatvector.cylance.com/en_us/home/report-oceanlotus-apt-group-leveraging-<MITRE_ATTACK>steganography</MITRE_ATTACK>.html
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 2/18
-variant from <TIMESTAMP>September</TIMESTAMP> 2016
-Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 3/18
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 4/18
-Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 5/18
-Remarkably similar in functionality to the previous samples from <TIMESTAMP>August</TIMESTAMP> 2016, this
-<MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning
-<MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing
-Upon <MITRE_ATTACK>execution</MITRE_ATTACK>, Ratsnif creates a run once mutex named "onceinstance", initialises
-<MITRE_ATTACK>server</MITRE_ATTACK> via an HTTP post to the /cl_client_online.php API endpoint. Next, a logging thread
-is created, which is used to <MITRE_ATTACK>route</MITRE_ATTACK> log messages to the C2 via HTTP POST requests to
-/cl_client_logs.php. The <MITRE_ATTACK>malware</MITRE_ATTACK> then proceeds to load wpcap.dll, before importing the
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 6/18
-All observed Ratsnif samples have been hardcoded with one or more C2 <MITRE_ATTACK>domains</MITRE_ATTACK>,
-regardless of whether they are used. This sample contains 2 hard-coded <MITRE_ATTACK>domains</MITRE_ATTACK>,
-search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>
-<MITRE_ATTACK>dns</MITRE_ATTACK>[.]domain-resolve[.]org (inactive)
-The C2 <MITRE_ATTACK>server</MITRE_ATTACK> itself is expected to expose a fairly intuitively named web API, supporting
-The <MITRE_ATTACK>malware</MITRE_ATTACK> contains support for the following commands issued via the
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 7/18
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 8/18
-Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
-  Wed, <TIMESTAMP>08 Aug</TIMESTAMP> 2018 02:52:52 UTC
-(https://elixir.bootlin.com/zephyr/v1.13.0/<MITRE_ATTACK>source</MITRE_ATTACK>/subsys/<MITRE_ATTACK>net</MITRE_ATTACK>/lib/http/http_parser.c)
-Packet sniffing focused on extracting login <MITRE_ATTACK>credentials</MITRE_ATTACK> and other sensitive data via
-<MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning
-<MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing
-http://blog.macnica.<MITRE_ATTACK>net</MITRE_ATTACK>/blog/2019/04/oceanlotus-218a.html
-https://elixir.bootlin.com/zephyr/v1.13.0/<MITRE_ATTACK>source</MITRE_ATTACK>/subsys/<MITRE_ATTACK>net</MITRE_ATTACK>/lib/http/http_parser.c
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 9/18
-config path to the <MITRE_ATTACK>malware</MITRE_ATTACK>.
-  -pass [<MITRE_ATTACK>CREDENTIALS</MITRE_ATTACK> DUMP PATH]
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 10/18
-in the configuration, the <MITRE_ATTACK>malware</MITRE_ATTACK> will add a firewall exception and disable Large Send
-  <MITRE_ATTACK>netsh</MITRE_ATTACK> advfirewall firewall add rule name=\"Core Networking - Router Solicitation\" dir=in
-pcap_geterr), the <MITRE_ATTACK>malware</MITRE_ATTACK> creates threads responsible for <MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning and <MITRE_ATTACK>DNS</MITRE_ATTACK>
-In order to be able to decrypt the SSL traffic, the <MITRE_ATTACK>malware</MITRE_ATTACK> performs SSL hijacking, using
-an open <MITRE_ATTACK>source</MITRE_ATTACK> library called WolfSSL and separately supplied certificate and private
-key files. For that purpose, it creates an internal WolfSSL <MITRE_ATTACK>server</MITRE_ATTACK>, listening on the first
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 11/18
-The <MITRE_ATTACK>malware</MITRE_ATTACK> can sniff traffic for the following protocols/ports:
-<MITRE_ATTACK>Ftp</MITRE_ATTACK>
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 12/18
-section (the same address as in the 2016 versions), the <MITRE_ATTACK>malware</MITRE_ATTACK> never seems to use it;
-instead, it logs the captured information into text files for further <MITRE_ATTACK>exfiltration</MITRE_ATTACK> by another
-configured on 192.168.8.135 and was running iNetSim to act as the <MITRE_ATTACK>DNS</MITRE_ATTACK> and HTTP
-servers. The attacker machine was located <MITRE_ATTACK>at</MITRE_ATTACK> 192.168.8.134 and the victim <MITRE_ATTACK>at</MITRE_ATTACK>
-Figure 14 shows the <MITRE_ATTACK>malware</MITRE_ATTACK> sending <MITRE_ATTACK>ARP</MITRE_ATTACK> packets asking for the MAC addresses of all
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 13/18
-Figure 14. <MITRE_ATTACK>ARP</MITRE_ATTACK> Broadcasts
-Figure 15 shows the <MITRE_ATTACK>malware</MITRE_ATTACK> sending <MITRE_ATTACK>ARP</MITRE_ATTACK> packets asking for the MAC addresses of all
-(192.168.8.134) and the default gateway (192.168.8.135): <MITRE_ATTACK>ARP</MITRE_ATTACK> Broadcasts
-unsolicited <MITRE_ATTACK>ARP</MITRE_ATTACK> packets to those addresses, updating the MAC address of the default
-Figure 15. <MITRE_ATTACK>ARP</MITRE_ATTACK> Poisoning
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 14/18
-Figure 16. <MITRE_ATTACK>arp</MITRE_ATTACK> -a results showing poisoned <MITRE_ATTACK>ARP</MITRE_ATTACK> Table on the victim machine
-Once the <MITRE_ATTACK>ARP</MITRE_ATTACK> table is poisoned, all traffic destined for the default gateway will be routed
-Finally, Figure 17 shows a poisoned <MITRE_ATTACK>DNS</MITRE_ATTACK> response for , whereby the <MITRE_ATTACK>DNS</MITRE_ATTACK> query was
-Figure 17. Ratsnif log file output showing <MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning and <MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing in action
-search.webstie.<MITRE_ATTACK>net</MITRE_ATTACK>
-<MITRE_ATTACK>Whois</MITRE_ATTACK>
-<MITRE_ATTACK>Server</MITRE_ATTACK>     <MITRE_ATTACK>whois</MITRE_ATTACK>.web4africa.<MITRE_ATTACK>net</MITRE_ATTACK>
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 15/18
-NameServers     ns21.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
-  ns22.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
-  ns23.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
-  ns24.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
-Obtained via Shodan, this history shows when the C2 <MITRE_ATTACK>server</MITRE_ATTACK> exposed various ports,
-OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK>:
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 16/18
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 17/18
-Figure 18. Shodan history for search.webstie.<MITRE_ATTACK>net</MITRE_ATTACK>
-Ratsnif is an intriguing <MITRE_ATTACK>discovery</MITRE_ATTACK> considering the length of time it has remained
-nefarious purposes. While all samples borrow heavily from open-<MITRE_ATTACK>source</MITRE_ATTACK> code/snippets,
-usual high standards observed in OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK>.
-  search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>   Domain   C2
-search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>
-  <MITRE_ATTACK>dns</MITRE_ATTACK>[.]domain-resolve[.]org   Domain   C2
-7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
-https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 18/18
-  <MITRE_ATTACK>Discovery</MITRE_ATTACK>   T1040   <MITRE_ATTACK>Network Sniffing</MITRE_ATTACK>   Sniffs packets and saves to file
-Scanning</MITRE_ATTACK>
-  <MITRE_ATTACK>ARP</MITRE_ATTACK>/SMB
-tion <MITRE_ATTACK>Discovery</MITRE_ATTACK>
-and Control</MITRE_ATTACK>
-Port</MITRE_ATTACK>
-Used Port</MITRE_ATTACK>
-Obfuscation</MITRE_ATTACK>
-  <MITRE_ATTACK>Impact</MITRE_ATTACK>   T1493   <MITRE_ATTACK>Transmitted Data
-Manipulation</MITRE_ATTACK>
-examines <MITRE_ATTACK>malware</MITRE_ATTACK> and suspected <MITRE_ATTACK>malware</MITRE_ATTACK> to better identify its abilities,
-information security and often deeply examines malicious <MITRE_ATTACK>software</MITRE_ATTACK>, which
+Trend Micro Cyber Safety Solutions Team <TIMESTAMP>March</TIMESTAMP> 7, 2019
+<MITRE_ATTACK>malware</MITRE_ATTACK> that piqued our interest in multiple ways.
+infection was done by exploiting <CVE>CVE-2018-8174</CVE>, a
+VBScript engine vulnerability that was patched by Microsoft back in <TIMESTAMP>May</TIMESTAMP> 2018.
+Second, it uses a multi-stage infection scheme. After it <MITRE_ATTACK>exploits</MITRE_ATTACK> the vulnerability, it
+downloads a DLL and runs it in <MITRE_ATTACK>PowerShell</MITRE_ATTACK> (PS). This file, which is a downloader, then
+downloader also checks for the existence of different kinds of antivirus <MITRE_ATTACK>software</MITRE_ATTACK>
+processes, and then proceeds to exit if any is found. <MITRE_ATTACK>At</MITRE_ATTACK> the time of <MITRE_ATTACK>discovery</MITRE_ATTACK>, the
+In addition to the previously mentioned facts, we quickly noticed that the <MITRE_ATTACK>malware</MITRE_ATTACK>
+any <MITRE_ATTACK>malware</MITRE_ATTACK> to date that communicates using Slack– although we’ve previously
+Note that as soon as this <MITRE_ATTACK>malware</MITRE_ATTACK> was discovered, we informed the Canadian Centre
+for Cyber Security, which acts as <COUNTRY>Canada</COUNTRY>’s National Computer Security Incident
+understand the <MITRE_ATTACK>malware</MITRE_ATTACK> that was found, and offered mitigation advice.
+https://nvd.nist.gov/vuln/detail/<CVE>CVE-2018-8174</CVE>
+https://blog.trendmicro.com/trendlabs-security-intelligence/microsoft-patch-tuesday-for-may-includes-updates-for-actively-exploited-<MITRE_ATTACK>vulnerabilities</MITRE_ATTACK>-2/
+The downloader, which runs through <MITRE_ATTACK>PowerShell</MITRE_ATTACK> as a DLL, serves several purposes.
+The first is to download the second stage <MITRE_ATTACK>malware</MITRE_ATTACK>, which we called the SLUB (for
+Finally, the downloader also <MITRE_ATTACK>exploits</MITRE_ATTACK> the <CVE>CVE-2015-1701</CVE> vulnerability to acquire Local
+<MITRE_ATTACK>Privilege Escalation</MITRE_ATTACK>. The exploit’s code was likely created by modifying code from a
+https://github.com/hfiref0x/<CVE>CVE-2015-1701</CVE>/blob/master/<MITRE_ATTACK>Source</MITRE_ATTACK>/Taihou/main.c
+The <MITRE_ATTACK>malware</MITRE_ATTACK> also embeds two authorization tokens to communicate with the Slack
+It copies itself to ProgramData\update\ and creates <MITRE_ATTACK>persistence</MITRE_ATTACK> via a Run
+registry key, calling export function UpdateMPUnits with <MITRE_ATTACK>rundll32</MITRE_ATTACK>.exe. Note the
+exec Execute command with <MITRE_ATTACK>cmd</MITRE_ATTACK>.exe
+destroy Delete <MITRE_ATTACK>malware</MITRE_ATTACK> from disk with a batch script
+<MITRE_ATTACK>reg</MITRE_ATTACK>
+Query <MITRE_ATTACK>Query registry</MITRE_ATTACK> key
+on <TIMESTAMP>February</TIMESTAMP> 19 and 20, while we estimate that the attacker compiled the <MITRE_ATTACK>malware</MITRE_ATTACK> on
+<TIMESTAMP>February</TIMESTAMP> 22.
+The attacker added the first commands to Github on <TIMESTAMP>February</TIMESTAMP> 20. However looking <MITRE_ATTACK>at</MITRE_ATTACK>
+the Slack channels, we can see that the attacker tested the <MITRE_ATTACK>malware</MITRE_ATTACK> on <TIMESTAMP>February</TIMESTAMP> 23
+and 24. The first victims were seen on <TIMESTAMP>February</TIMESTAMP> 27.
+^exec,<MITRE_ATTACK>tasklist</MITRE_ATTACK>$
+^<MITRE_ATTACK>reg</MITRE_ATTACK>,read,HKEY_CURRENT_USER,<MITRE_ATTACK>SOFTWARE</MITRE_ATTACK>\\Microsoft\\Windows\\CurrentVersion\\Run$
+all users, and check the <MITRE_ATTACK>malware</MITRE_ATTACK>’s <MITRE_ATTACK>persistence</MITRE_ATTACK> registry key.
+^exec,<MITRE_ATTACK>powershell</MITRE_ATTACK> -Command compress-archive -path C:\Users\USER\Desktop -
+We also noted a specific interest in a <MITRE_ATTACK>software</MITRE_ATTACK> called “Neologic Plus Board,” which
+indication that the attackers either developed the <MITRE_ATTACK>malware</MITRE_ATTACK> or got it from a private
+information, with a special focus on communication <MITRE_ATTACK>software</MITRE_ATTACK>, in an attempt to learn
+any <MITRE_ATTACK>domains</MITRE_ATTACK> or anything else that could leave a trail. The few <MITRE_ATTACK>email addresses</MITRE_ATTACK> we
+their <MITRE_ATTACK>malware</MITRE_ATTACK>.
+of another third party’s computer using <MITRE_ATTACK>malware</MITRE_ATTACK>, and reported to us the existence of a
