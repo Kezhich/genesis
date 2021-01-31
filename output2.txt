@@ -1,33 +1,121 @@
-analysis and the earliest one could trace back to <TIMESTAMP>July</TIMESTAMP> 2018. The relevant accounts were still in use when the report was completed.
-The related attack vector is an XLSM file, created on <TIMESTAMP>August</TIMESTAMP> 8 and uploaded to VT on <TIMESTAMP>August</TIMESTAMP> 13, that leverages <CVE>CVE-2017-11882</CVE> vulnerability to release
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe to the %AppData% directory and then add registry Run key to stay persistent. To obtain C2 address, it reads data from Github and Feed43 where
-The sample was uploaded to VT <MITRE_ATTACK>at</MITRE_ATTACK> 5:05 on <TIMESTAMP>Aug</TIMESTAMP> 13, 2019 with below details:
-Name <COUNTRY>India</COUNTRY> makes Kashmir Dangerous Place in the World.xlsm
-After opening, a blurred picture shows up to lure the victim to enable macro. After that, a clear picture titled "<COUNTRY>India</COUNTRY> has made Kashmir the most dangerous place
-1.Correct the MZ header located <MITRE_ATTACK>at</MITRE_ATTACK> offset 0x558 of the shellcode entry point (add “MZ”)
-2.Drop the PE file to "%AppData%\<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe".
-3.Add registry run key (key value: lollipop) to make "%AppData%\<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe" persistent.
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe Analysis
-<MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe is released to the %AppData% directory, and the compilation time is <TIMESTAMP>August</TIMESTAMP> 8th, 2019 which coincides with the XML creation time on Github that
-Name <MITRE_ATTACK>MSBuild</MITRE_ATTACK>.exe
-After the malicious code is executed, it will “sleep” for a period of time. This is implemented by executing function in a loop for 80,000 times, to delay <MITRE_ATTACK>execution</MITRE_ATTACK>
-<MITRE_ATTACK>Source</MITRE_ATTACK> Decrypted Content
-The Github account used by the attacker is created on <TIMESTAMP>August</TIMESTAMP> 7th, 2019, which matches the compilation time of the sample:
-The decrypted C2 address is 139.28.38.236 and the <MITRE_ATTACK>malware</MITRE_ATTACK> uses HTTP/HTTPS in network communication:
-<COUNTRY>cn</COUNTRY> Computer name
-ver <MITRE_ATTACK>Malware</MITRE_ATTACK> version, here it is 1.0
-After that the <MITRE_ATTACK>malware</MITRE_ATTACK> enters a while loop, to perform actions according to HTTP response:
-23 Upload <MITRE_ATTACK>screen capture</MITRE_ATTACK> file
-The attacker uploads the files generated after executing remote commands to the C&C <MITRE_ATTACK>server</MITRE_ATTACK>. The following table is a comparison table of the cached files
-TPX499.dat <MITRE_ATTACK>Screen capture</MITRE_ATTACK> file
-The <MITRE_ATTACK>malware</MITRE_ATTACK> collects a list of files with specific suffixes, stores them in a local file, and uploads to the C2 <MITRE_ATTACK>server</MITRE_ATTACK>:
-extracted for investigation. From the time of file creation, the attacker started working <MITRE_ATTACK>at</MITRE_ATTACK> least as early as <TIMESTAMP>July</TIMESTAMP> 2018. The earliest created account was on <TIMESTAMP>July</TIMESTAMP>
-3, 2018, and continued to <TIMESTAMP>August</TIMESTAMP> 2019 when the document was completed. In terms of the statistics of monthly creations, the number of creations in <TIMESTAMP>July</TIMESTAMP> 2018
-The attacker may conduct a concentrated attack from <TIMESTAMP>July</TIMESTAMP> to <TIMESTAMP>September</TIMESTAMP> in 2018.
-completed by multiple attackers considering the different names being used. Many IDs can be found on <MITRE_ATTACK>social media</MITRE_ATTACK>, and most of them are located in
-<COUNTRY>India</COUNTRY> and <COUNTRY>Pakistan</COUNTRY>:
-Most of the C2s are located in <COUNTRY>Ukraine</COUNTRY> while there are 2 IPs in <COUNTRY>China</COUNTRY>:
-In the perspective of cyber wars, the conflict between <COUNTRY>India</COUNTRY> and <COUNTRY>Pakistan</COUNTRY> over the territory of Kashmir has lasted for decades, which makes it a perfect topic in
-target attacks. For example, Donot and Bitter disguised as Kashmiri Voice to attack <COUNTRY>Pakistan</COUNTRY>, Transparent Tribe attacked <COUNTRY>India</COUNTRY> with decoy document regarding
-<COUNTRY>India</COUNTRY>’s attempt to abolish <COUNTRY>India</COUNTRY>-controlled Kashmir is to detonate the conflict between the two countries. The two sides exchanged fire and some soldiers have
-attacks against <COUNTRY>China</COUNTRY>, we must take actions in advance and keep a close eye on their recent activities.
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 1/18
+Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from
+threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-
+The OceanLotus Group (aka <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT>, CobaltKitty | previous reports: The SpyRATs of
+OceanLotus; OceanLotus APT Group Leveraging <MITRE_ATTACK>Steganography</MITRE_ATTACK>) is using a suite of
+development since 2016, combine capabilities like packet sniffing, gateway/device <MITRE_ATTACK>ARP</MITRE_ATTACK>
+poisoning, <MITRE_ATTACK>DNS</MITRE_ATTACK> poisoning, HTTP injection, and MAC spoofing. 
+  Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html
+https://threatvector.cylance.com/en_us/home/report-oceanlotus-apt-group-leveraging-<MITRE_ATTACK>steganography</MITRE_ATTACK>.html
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 2/18
+variant from <TIMESTAMP>September</TIMESTAMP> 2016
+Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 3/18
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 4/18
+Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 5/18
+Remarkably similar in functionality to the previous samples from <TIMESTAMP>August</TIMESTAMP> 2016, this
+<MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning
+<MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing
+Upon <MITRE_ATTACK>execution</MITRE_ATTACK>, Ratsnif creates a run once mutex named "onceinstance", initialises
+<MITRE_ATTACK>server</MITRE_ATTACK> via an HTTP post to the /cl_client_online.php API endpoint. Next, a logging thread
+is created, which is used to <MITRE_ATTACK>route</MITRE_ATTACK> log messages to the C2 via HTTP POST requests to
+/cl_client_logs.php. The <MITRE_ATTACK>malware</MITRE_ATTACK> then proceeds to load wpcap.dll, before importing the
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 6/18
+All observed Ratsnif samples have been hardcoded with one or more C2 <MITRE_ATTACK>domains</MITRE_ATTACK>,
+regardless of whether they are used. This sample contains 2 hard-coded <MITRE_ATTACK>domains</MITRE_ATTACK>,
+search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>
+<MITRE_ATTACK>dns</MITRE_ATTACK>[.]domain-resolve[.]org (inactive)
+The C2 <MITRE_ATTACK>server</MITRE_ATTACK> itself is expected to expose a fairly intuitively named web API, supporting
+The <MITRE_ATTACK>malware</MITRE_ATTACK> contains support for the following commands issued via the
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 7/18
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 8/18
+Alias     OceanLotus <APT><MITRE_ATTACK>APT32</MITRE_ATTACK></APT> Ratsnif
+  Wed, <TIMESTAMP>08 Aug</TIMESTAMP> 2018 02:52:52 UTC
+(https://elixir.bootlin.com/zephyr/v1.13.0/<MITRE_ATTACK>source</MITRE_ATTACK>/subsys/<MITRE_ATTACK>net</MITRE_ATTACK>/lib/http/http_parser.c)
+Packet sniffing focused on extracting login <MITRE_ATTACK>credentials</MITRE_ATTACK> and other sensitive data via
+<MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning
+<MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing
+http://blog.macnica.<MITRE_ATTACK>net</MITRE_ATTACK>/blog/2019/04/oceanlotus-218a.html
+https://elixir.bootlin.com/zephyr/v1.13.0/<MITRE_ATTACK>source</MITRE_ATTACK>/subsys/<MITRE_ATTACK>net</MITRE_ATTACK>/lib/http/http_parser.c
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 9/18
+config path to the <MITRE_ATTACK>malware</MITRE_ATTACK>.
+  -pass [<MITRE_ATTACK>CREDENTIALS</MITRE_ATTACK> DUMP PATH]
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 10/18
+in the configuration, the <MITRE_ATTACK>malware</MITRE_ATTACK> will add a firewall exception and disable Large Send
+  <MITRE_ATTACK>netsh</MITRE_ATTACK> advfirewall firewall add rule name=\"Core Networking - Router Solicitation\" dir=in
+pcap_geterr), the <MITRE_ATTACK>malware</MITRE_ATTACK> creates threads responsible for <MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning and <MITRE_ATTACK>DNS</MITRE_ATTACK>
+In order to be able to decrypt the SSL traffic, the <MITRE_ATTACK>malware</MITRE_ATTACK> performs SSL hijacking, using
+an open <MITRE_ATTACK>source</MITRE_ATTACK> library called WolfSSL and separately supplied certificate and private
+key files. For that purpose, it creates an internal WolfSSL <MITRE_ATTACK>server</MITRE_ATTACK>, listening on the first
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 11/18
+The <MITRE_ATTACK>malware</MITRE_ATTACK> can sniff traffic for the following protocols/ports:
+<MITRE_ATTACK>Ftp</MITRE_ATTACK>
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 12/18
+section (the same address as in the 2016 versions), the <MITRE_ATTACK>malware</MITRE_ATTACK> never seems to use it;
+instead, it logs the captured information into text files for further <MITRE_ATTACK>exfiltration</MITRE_ATTACK> by another
+configured on 192.168.8.135 and was running iNetSim to act as the <MITRE_ATTACK>DNS</MITRE_ATTACK> and HTTP
+servers. The attacker machine was located <MITRE_ATTACK>at</MITRE_ATTACK> 192.168.8.134 and the victim <MITRE_ATTACK>at</MITRE_ATTACK>
+Figure 14 shows the <MITRE_ATTACK>malware</MITRE_ATTACK> sending <MITRE_ATTACK>ARP</MITRE_ATTACK> packets asking for the MAC addresses of all
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 13/18
+Figure 14. <MITRE_ATTACK>ARP</MITRE_ATTACK> Broadcasts
+Figure 15 shows the <MITRE_ATTACK>malware</MITRE_ATTACK> sending <MITRE_ATTACK>ARP</MITRE_ATTACK> packets asking for the MAC addresses of all
+(192.168.8.134) and the default gateway (192.168.8.135): <MITRE_ATTACK>ARP</MITRE_ATTACK> Broadcasts
+unsolicited <MITRE_ATTACK>ARP</MITRE_ATTACK> packets to those addresses, updating the MAC address of the default
+Figure 15. <MITRE_ATTACK>ARP</MITRE_ATTACK> Poisoning
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 14/18
+Figure 16. <MITRE_ATTACK>arp</MITRE_ATTACK> -a results showing poisoned <MITRE_ATTACK>ARP</MITRE_ATTACK> Table on the victim machine
+Once the <MITRE_ATTACK>ARP</MITRE_ATTACK> table is poisoned, all traffic destined for the default gateway will be routed
+Finally, Figure 17 shows a poisoned <MITRE_ATTACK>DNS</MITRE_ATTACK> response for , whereby the <MITRE_ATTACK>DNS</MITRE_ATTACK> query was
+Figure 17. Ratsnif log file output showing <MITRE_ATTACK>ARP</MITRE_ATTACK> poisoning and <MITRE_ATTACK>DNS</MITRE_ATTACK> spoofing in action
+search.webstie.<MITRE_ATTACK>net</MITRE_ATTACK>
+<MITRE_ATTACK>Whois</MITRE_ATTACK>
+<MITRE_ATTACK>Server</MITRE_ATTACK>     <MITRE_ATTACK>whois</MITRE_ATTACK>.web4africa.<MITRE_ATTACK>net</MITRE_ATTACK>
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 15/18
+NameServers     ns21.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
+  ns22.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
+  ns23.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
+  ns24.cloudns.<MITRE_ATTACK>net</MITRE_ATTACK>
+Obtained via Shodan, this history shows when the C2 <MITRE_ATTACK>server</MITRE_ATTACK> exposed various ports,
+OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK>:
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 16/18
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 17/18
+Figure 18. Shodan history for search.webstie.<MITRE_ATTACK>net</MITRE_ATTACK>
+Ratsnif is an intriguing <MITRE_ATTACK>discovery</MITRE_ATTACK> considering the length of time it has remained
+nefarious purposes. While all samples borrow heavily from open-<MITRE_ATTACK>source</MITRE_ATTACK> code/snippets,
+usual high standards observed in OceanLotus <MITRE_ATTACK>malware</MITRE_ATTACK>.
+  search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>   Domain   C2
+search[.]webstie[.]<MITRE_ATTACK>net</MITRE_ATTACK>
+  <MITRE_ATTACK>dns</MITRE_ATTACK>[.]domain-resolve[.]org   Domain   C2
+7/2/2019 Threat Spotlight: Ratsnif - New Network <MITRE_ATTACK>Vermin</MITRE_ATTACK> from OceanLotus
+https://threatvector.cylance.com/en_us/home/threat-spotlight-ratsnif-new-network-<MITRE_ATTACK>vermin</MITRE_ATTACK>-from-oceanlotus.html 18/18
+  <MITRE_ATTACK>Discovery</MITRE_ATTACK>   T1040   <MITRE_ATTACK>Network Sniffing</MITRE_ATTACK>   Sniffs packets and saves to file
+Scanning</MITRE_ATTACK>
+  <MITRE_ATTACK>ARP</MITRE_ATTACK>/SMB
+tion <MITRE_ATTACK>Discovery</MITRE_ATTACK>
+and Control</MITRE_ATTACK>
+Port</MITRE_ATTACK>
+Used Port</MITRE_ATTACK>
+Obfuscation</MITRE_ATTACK>
+  <MITRE_ATTACK>Impact</MITRE_ATTACK>   T1493   <MITRE_ATTACK>Transmitted Data
+Manipulation</MITRE_ATTACK>
+examines <MITRE_ATTACK>malware</MITRE_ATTACK> and suspected <MITRE_ATTACK>malware</MITRE_ATTACK> to better identify its abilities,
+information security and often deeply examines malicious <MITRE_ATTACK>software</MITRE_ATTACK>, which
