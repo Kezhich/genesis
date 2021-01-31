@@ -7,7 +7,7 @@ app.use(fileUpload({}));
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.send('Hello World');
+  res.send('Open /form and /get_json, please.');
 })
 
 app.get('/get_json', function (req, res) {
