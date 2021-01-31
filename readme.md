@@ -10,7 +10,7 @@ node app.js
 
 http://localhost:3000/form - Форма загрузки аналитических отчетов (.txt)
 
-http://localhost:3000/get_json - Результат анализа отчета в виде json
+http://localhost:3000/get_json - Результат анализа отчетов в json
 
 ## Суть, TLDR
 
